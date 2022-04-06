@@ -1,0 +1,231 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  label {
+    color: #1976d2;
+    font-weight: bold;
+    display: block;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 30%;
+  }
+
+  input, .select {
+    display: block;
+    margin-left: 30%;
+    width: 40%;
+    background: rgba(0,0,0,0.09);
+    border: 3px;    
+    border-radius: 5%;
+    padding: 1% 2% 1% 2%;
+  }
+
+  input:focus, .select:focus {
+    outline-width: 0;
+    background: rgba(31,134,252, 0.15);
+    transition: 0.1s;
+    border-bottom: 2px solid #888;
+  }
+
+  form {
+    margin-top: 3%;
+    width: 70%;
+    display:grid;
+    border: #1976d2 1px solid;
+    border-radius:8px;box-shadow:0 0 15px -5px #1976d2;
+    background-color: #fafafa;
+    margin-bottom: 5%;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+  }
+
+  a {
+    color: white;
+    font-weight: 600;
+    align-items: center;
+  }
+
+  .toolbar img {
+    margin: 0 16px;
+  }
+
+  .content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+    background: repeating-linear-gradient(45deg,
+    #b0befd,
+    #ffffff 300px,
+    #ffffff 500px,
+    #92a0eb 50px
+    );
+  }
+
+  svg.material-icons {
+    height: 24px;
+    width: auto;
+  }
+
+  svg.material-icons:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  .card svg.material-icons path {
+    fill: #888;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .card {
+    all: unset;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    height: 40px;
+    width: 200px;
+    margin: 0 8px 16px;
+    margin-top: 5%;
+    padding-bottom: 5%;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+  }
+
+
+  .card.card-small {
+    height: 16px;
+    width: 168px;
+  }
+
+
+  svg#carshop {
+    width: 80px;
+    position: absolute;
+    left: -10px;
+    top: -24px;
+  }
+</style>
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <img
+    width="40"
+    src="../assets/test.svg"
+  />
+  <span>Technical Test by Diana Reyes</span>
+  <div class="spacer"></div>
+  <span>Ver listado</span>
+    <a aria-label="Listado" target="_blank" rel="noopener" href="../student/liststudent.html" title="Listado">
+      <img src="../assets/list.png" width="40">
+    </a>
+</div>
+
+<div class="content" role="main">
+
+  <!-- Highlight Card -->
+  <div class="card">
+
+    <img width="40" src="../assets/student.png">
+
+    <span> Registrar Estudiante </span>
+
+  </div>
+
+  <form #formStudent (ngSubmit)="formularioEnviado()" >
+    <input type="hidden" #selection>
+  
+    <label class="label">Nombre completo</label> 
+    <input type="text" [(ngModel)]="person.name">
+  
+    <label class="label">Fecha de Nacimiento</label> 
+    <input type="date" value="1998-01-01" min=»1945-01-01″ max=»2007-01-01″/>
+
+    <label class="label">Documento de Identidad</label> 
+    <input type="text" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+
+    <label class="label">Email</label> 
+    <input type="email" ng-pattern=" ^[a-z]+[a-z0-9._-]+@[a-z]+\.[a-z.]{2,5}$"/>
+    
+    <label class="label">Programa</label>
+    <select name="select_career" class="select">
+      <option [value]="item" *ngFor="let item of career">{{item}}</option>
+    </select>
+    
+    <label class="label">Semestres esperados</label>
+    <input type="number" min="8" max="10">
+
+    <label class="label">Primera carrera universitaria</label>
+    <label for="si" class="decision">SI</label>
+    <input type="radio" id="si" name="decision" value="si">
+    <label for="no" class="decision">NO</label>
+    <input type="radio" id="no" name="decision" value="no">
+
+    <label class="label">Nivel de inglés</label>
+    <select name="select_level" class="select">
+      <option [value]="item" *ngFor="let item of level">{{item}}</option>
+    </select>
+
+    <label class="label">Foto</label>
+    <input type="file">
+  
+    <div class="card-container">
+      <button class="card card-small" (click)="selection.value = 'component'" tabindex="0">
+        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+        </svg>
+        <span type="ngSubmit" (click)="formularioEnviado()">Registrar</span>
+      </button>
+    </div>
+  </form>
+
+  <!--<table id="t01">
+    <tr>
+      <th>Nombre completo</th>
+      <th>Fecha Nacimiento</th> 
+      <th>Documento de Identidad</th>
+      <th>Email</th>
+      <th>Semestres esperados</th>          
+      <th>Primera carrera</th>          
+      <th>Nivel de Inglés</th>
+      <th>Foto</th>
+    </tr>
+    <tr *ngFor="let person of student">
+      <td>{{person.name}}</td>
+    </tr>
+  </table>-->
+</div>
+
+<router-outlet></router-outlet>
